@@ -3,9 +3,11 @@ import time
 import threading
 import logging
 from datetime import datetime
+from numba import jit
 
 from .zmqvan import ZMQVan
 from .message import *
+
 
 Entry = namedtuple('Entry', ['msg', 'send_time', 'num_retry'])
 
@@ -110,7 +112,7 @@ class Resender(object):
         return ret
 
     def _monitoring(self):
-        while not self._exit:
+        while not self._local.exit:
             time.sleep(self._timeout)
             resend = []
             now = datetime.now()

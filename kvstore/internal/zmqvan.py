@@ -98,6 +98,9 @@ class ZMQVan(object):
 
         return port
 
+    def mu_node(self):
+        pass
+
     def _connect(self, node_id, port, hostname=None):
         """Connect to a node
         :return:

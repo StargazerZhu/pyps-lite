@@ -1,10 +1,12 @@
 from collections import namedtuple
 from enum import Enum
 
+
 class Role(Enum):
     SERVER = 1
     WORKER = 2
     SCHEDULER = 4
+
 
 class Command(Enum):
     EMPTY = 1
@@ -14,8 +16,9 @@ class Command(Enum):
     ACK = 5
     HEARTBEAT = 6
 
+
 class Node(namedtuple('Node', [
-    'id', 'role', 'hostname', 'port', 'is_recovery'])):
+    'id', 'role', 'hostname', 'port', 'ip', 'is_recovery'])):
 
     def __str__(self):
         ss = "role="
@@ -26,6 +29,7 @@ class Node(namedtuple('Node', [
             self.ip, self.port, self.is_recovery
         )
         return ss
+
 
 class Control(namedtuple('Control', ['cmd', 'node', 'msg_sig'])):
 
@@ -44,6 +48,7 @@ class Control(namedtuple('Control', ['cmd', 'node', 'msg_sig'])):
             ss += "}"
         if self.cmd == Command.ACK:
             ss += ", msg_sig=" + str(self.msg_sig)
+
 
 class Meta(namedtuple('Meta', [
     'timestamp', 'control', 'recver', 'sender', 'app_id', 'request',
@@ -82,3 +87,4 @@ class Message(namedtuple('Message', ['meta', 'data'])):
         ss += " Body:"
         ss += str(self.data)
         return ss
+
